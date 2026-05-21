@@ -1,0 +1,241 @@
+CREATE OR REPLACE TABLE CUSTOMERS (
+    CID INT,
+    CNAME VARCHAR,
+    AMOUNT NUMBER(10,2),
+    ADRESS VARCHAR,
+    PHONE VARCHAR,
+    CREATE_TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    UPDATE_TIME TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
+);
+
+INSERT INTO CUSTOMERS (CID, CNAME, AMOUNT, ADRESS, PHONE) VALUES
+(1, 'Rajesh Kumar', 5000.00, 'MG Road, Bangalore', '9876543201'),
+(2, 'Priya Sharma', 3200.50, 'Connaught Place, Delhi', '9876543202'),
+(3, 'Amit Patel', 7500.00, 'SG Highway, Ahmedabad', '9876543203'),
+(4, 'Sunita Reddy', 1200.75, 'Banjara Hills, Hyderabad', '9876543204'),
+(5, 'Vikram Singh', 8900.00, 'Civil Lines, Jaipur', '9876543205'),
+(6, 'Anita Desai', 4300.25, 'Marine Drive, Mumbai', '9876543206'),
+(7, 'Suresh Nair', 6100.00, 'MG Road, Kochi', '9876543207'),
+(8, 'Kavitha Iyer', 2750.50, 'Anna Nagar, Chennai', '9876543208'),
+(9, 'Mahesh Gupta', 9200.00, 'Hazratganj, Lucknow', '9876543209'),
+(10, 'Deepa Menon', 1800.00, 'Vashi, Navi Mumbai', '9876543210'),
+(11, 'Arjun Rao', 5500.75, 'Koramangala, Bangalore', '9876543211'),
+(12, 'Lakshmi Pillai', 3900.00, 'Thiruvananthapuram', '9876543212'),
+(13, 'Ravi Shankar', 7200.25, 'Varanasi, UP', '9876543213'),
+(14, 'Meena Kumari', 4100.00, 'Jubilee Hills, Hyderabad', '9876543214'),
+(15, 'Ganesh Pandey', 6800.50, 'Gomti Nagar, Lucknow', '9876543215'),
+(16, 'Pooja Mishra', 2300.00, 'Arera Colony, Bhopal', '9876543216'),
+(17, 'Karthik Rajan', 8100.75, 'T Nagar, Chennai', '9876543217'),
+(18, 'Nandini Das', 1500.00, 'Salt Lake, Kolkata', '9876543218'),
+(19, 'Sanjay Joshi', 9500.25, 'FC Road, Pune', '9876543219'),
+(20, 'Rekha Verma', 4700.00, 'Saket, Delhi', '9876543220'),
+(21, 'Arun Bhat', 3100.50, 'Jayanagar, Bangalore', '9876543221'),
+(22, 'Swathi Krishnan', 6400.00, 'Adyar, Chennai', '9876543222'),
+(23, 'Mohan Tiwari', 2900.75, 'Indira Nagar, Lucknow', '9876543223'),
+(24, 'Divya Agarwal', 7800.00, 'Lajpat Nagar, Delhi', '9876543224'),
+(25, 'Prakash Hegde', 5200.25, 'Mangalore, Karnataka', '9876543225'),
+(26, 'Asha Bhatt', 4400.00, 'Navrangpura, Ahmedabad', '9876543226'),
+(27, 'Venkatesh Murthy', 8500.50, 'Whitefield, Bangalore', '9876543227'),
+(28, 'Shalini Saxena', 1900.00, 'Vaishali Nagar, Jaipur', '9876543228'),
+(29, 'Harish Chandra', 6700.75, 'Alkapuri, Vadodara', '9876543229'),
+(30, 'Padma Sundaram', 3600.00, 'Mylapore, Chennai', '9876543230'),
+(31, 'Nitin Kulkarni', 9100.25, 'Deccan, Pune', '9876543231'),
+(32, 'Geeta Banerjee', 2600.00, 'Park Street, Kolkata', '9876543232'),
+(33, 'Ramesh Shetty', 7400.50, 'Udupi, Karnataka', '9876543233'),
+(34, 'Anjali Kapoor', 4800.00, 'Sector 17, Chandigarh', '9876543234'),
+(35, 'Sunil Patil', 5900.75, 'Shivaji Nagar, Pune', '9876543235'),
+(36, 'Bhavna Mehta', 3400.00, 'CG Road, Ahmedabad', '9876543236'),
+(37, 'Dinesh Yadav', 8200.25, 'Noida, UP', '9876543237'),
+(38, 'Radha Gopalan', 1700.00, 'Velachery, Chennai', '9876543238'),
+(39, 'Manoj Dubey', 6200.50, 'MP Nagar, Bhopal', '9876543239'),
+(40, 'Savitha Kamath', 4000.00, 'Manipal, Karnataka', '9876543240'),
+(41, 'Ashok Malhotra', 9400.75, 'Dwarka, Delhi', '9876543241'),
+(42, 'Jyothi Srinivasan', 2200.00, 'Besant Nagar, Chennai', '9876543242'),
+(43, 'Vivek Chauhan', 7100.25, 'Mall Road, Shimla', '9876543243'),
+(44, 'Smitha Nambiar', 5300.00, 'Calicut, Kerala', '9876543244'),
+(45, 'Girish Sethi', 3800.50, 'Model Town, Delhi', '9876543245'),
+(46, 'Uma Devi', 6600.00, 'Secunderabad, Telangana', '9876543246'),
+(47, 'Pankaj Tripathi', 4500.75, 'Gomti Nagar, Lucknow', '9876543247'),
+(48, 'Vasudha Rao', 8700.00, 'Indiranagar, Bangalore', '9876543248'),
+(49, 'Rohit Thakur', 2100.25, 'Shimla, Himachal Pradesh', '9876543249'),
+(50, 'Lalitha Subramanian', 7600.00, 'Porur, Chennai', '9876543250');
+
+
+CREATE OR REPLACE PROCEDURE INSERT_CUSTOMER(
+    p_cid INT,
+    p_cname VARCHAR,
+    p_amount NUMBER(10,2),
+    p_adress VARCHAR,
+    p_phone VARCHAR
+)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+BEGIN
+    INSERT INTO CUSTOMERS (CID, CNAME, AMOUNT, ADRESS, PHONE, CREATE_TIME, UPDATE_TIME)
+    VALUES (:p_cid, :p_cname, :p_amount, :p_adress, :p_phone, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+    RETURN 'Customer inserted successfully';
+END;
+$$;
+
+CREATE OR REPLACE PROCEDURE WITHDRAW(
+    p_acno INT,
+    p_withdraw_amount NUMBER(10,2)
+)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    v_balance NUMBER(10,2);
+BEGIN
+    SELECT AMOUNT INTO v_balance FROM CUSTOMERS WHERE CID = :p_acno;
+
+    IF (v_balance IS NULL) THEN
+        RETURN 'Account not found';
+    END IF;
+
+    IF (v_balance < :p_withdraw_amount) THEN
+        RETURN 'Insufficient balance. Available: ' || v_balance;
+    END IF;
+
+    UPDATE CUSTOMERS
+    SET AMOUNT = AMOUNT - :p_withdraw_amount,
+        UPDATE_TIME = CURRENT_TIMESTAMP()
+    WHERE CID = :p_acno;
+
+    RETURN 'Withdrawal successful. New balance: ' || (v_balance - :p_withdraw_amount);
+END;
+$$;
+
+CALL WITHDRAW(1, 1000);
+
+
+CREATE OR REPLACE PROCEDURE DEPOSIT(
+    p_acno INT,
+    p_deposit_amount NUMBER(10,2)
+)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    v_balance NUMBER(10,2);
+    v_cname VARCHAR;
+BEGIN
+    SELECT AMOUNT, CNAME INTO v_balance, v_cname FROM CUSTOMERS WHERE CID = :p_acno;
+
+    IF (v_balance IS NULL) THEN
+        RETURN 'Account not found';
+    END IF;
+
+    IF (:p_deposit_amount <= 0) THEN
+        RETURN 'Deposit amount must be greater than zero';
+    END IF;
+
+    UPDATE CUSTOMERS
+    SET AMOUNT = AMOUNT + :p_deposit_amount,
+        UPDATE_TIME = CURRENT_TIMESTAMP()
+    WHERE CID = :p_acno;
+
+    RETURN 'Deposit successful. Customer: ' || v_cname || ', Deposited: ' || :p_deposit_amount || ', Available Balance: ' || (v_balance + :p_deposit_amount);
+END;
+$$;
+
+call deposit(1,5000);
+
+CREATE OR REPLACE PROCEDURE GET_CUSTOMERS_BY_BRANCH(
+    p_branch VARCHAR
+)
+RETURNS TABLE(CID INT, CNAME VARCHAR, AMOUNT NUMBER(10,2), ADRESS VARCHAR, PHONE VARCHAR)
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    res RESULTSET;
+BEGIN
+    res := (SELECT CID, CNAME, AMOUNT, ADRESS, PHONE
+            FROM CUSTOMERS
+            WHERE UPPER(ADRESS) LIKE '%' || UPPER(:p_branch) || '%');
+    RETURN TABLE(res);
+END;
+$$;
+
+
+CALL GET_CUSTOMERS_BY_BRANCH('Bangalore');
+
+
+
+CREATE OR REPLACE PROCEDURE DELETE_INACTIVE_CUSTOMER(
+    p_acno INT
+)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    v_cname VARCHAR;
+    v_balance NUMBER(10,2);
+BEGIN
+    SELECT CNAME, AMOUNT INTO v_cname, v_balance FROM CUSTOMERS WHERE CID = :p_acno;
+
+    IF (v_cname IS NULL) THEN
+        RETURN 'Account not found';
+    END IF;
+
+    IF (v_balance > 0) THEN
+        RETURN 'Customer ' || v_cname || ' has active balance: ' || v_balance || '. Cannot delete.';
+    END IF;
+
+    DELETE FROM CUSTOMERS WHERE CID = :p_acno;
+
+    RETURN 'Customer ' || v_cname || ' (Account: ' || :p_acno || ') deleted successfully as inactive.';
+END;
+$$;
+
+
+
+CALL DELETE_INACTIVE_CUSTOMER(5);
+
+
+
+CREATE OR REPLACE PROCEDURE MINI_STATEMENT(
+    p_acno INT
+)
+RETURNS VARCHAR
+LANGUAGE SQL
+AS
+$$
+DECLARE
+    v_cname VARCHAR;
+    v_balance NUMBER(10,2);
+    v_phone VARCHAR;
+    v_adress VARCHAR;
+    v_create_time TIMESTAMP;
+    v_update_time TIMESTAMP;
+    v_result VARCHAR;
+BEGIN
+    SELECT CNAME, AMOUNT, PHONE, ADRESS, CREATE_TIME, UPDATE_TIME
+    INTO v_cname, v_balance, v_phone, v_adress, v_create_time, v_update_time
+    FROM CUSTOMERS WHERE CID = :p_acno;
+
+    IF (v_cname IS NULL) THEN
+        RETURN 'Account not found';
+    END IF;
+
+    v_result := '====== MINI STATEMENT ======\n';
+    v_result := v_result || 'Account No   : ' || :p_acno || '\n';
+    v_result := v_result || 'Customer Name: ' || v_cname || '\n';
+    v_result := v_result || 'Phone        : ' || v_phone || '\n';
+    v_result := v_result || 'Address      : ' || v_adress || '\n';
+    v_result := v_result || 'Balance      : ' || v_balance || '\n';
+    v_result := v_result || 'Account Since: ' || v_create_time || '\n';
+    v_result := v_result || 'Last Updated : ' || v_update_time || '\n';
+    v_result := v_result || '============================';
+
+    RETURN v_result;
+END;
+$$;
+
+CALL MINI_STATEMENT(1);
